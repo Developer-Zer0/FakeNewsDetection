@@ -1,17 +1,18 @@
 let sendText = document.getElementById('sendText');
 
+  var resp = '';
   sendText.onclick = async function(element) {
 
 	async function f() {
 		let promise = new Promise((resolve, reject) => {
-			setTimeout(() => resolve("done!"), 2000)
+			setTimeout(() => resolve("not done!"), 2000)
 		  });
 		
-		let resp = await promise;
+		call = await promise;
 		chrome.tabs.executeScript(
 			null,
 			{code: "window.getSelection().toString()"}, async function(selection){
-				sel = selection[0];
+				// sel = selection[0];
 				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
 				var theUrl = "http://localhost:5000/get_prediction";
 				xmlhttp.open("POST", theUrl);
@@ -20,7 +21,6 @@ let sendText = document.getElementById('sendText');
 				xmlhttp.onreadystatechange =  async function() {
 					if (this.readyState == 4) {
 					  //JSON.parse does not evaluate the attacker's scripts.
-					  console.log(this.responseText);
 					  resp =  JSON.parse(this.responseText);
 					}
 				}
@@ -28,7 +28,6 @@ let sendText = document.getElementById('sendText');
 					setTimeout(() => resolve("done!"), 1000)
 				  });				
 				let result = await promise;
-				resp = result
 				return result;
 			}
 		);
