@@ -10,7 +10,7 @@ sendText.onclick = async function(element) {
 		  {code: "window.getSelection().toString()"}, async function(selection){
 			  // sel = selection[0];
 			  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-			  var theUrl = "";
+			  var theUrl = "http://localhost:5000/get_prediction";
 			  xmlhttp.open("POST", theUrl);
 			  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 			  xmlhttp.send(JSON.stringify({ "text": selection[0] }));
@@ -18,6 +18,7 @@ sendText.onclick = async function(element) {
 				  if (xmlhttp.readyState == 4) {
 					// JSON.parse does not evaluate the attacker's scripts.
 					resp = JSON.parse(xmlhttp.responseText);
+					resp = resp['prediction']
 				  }
 			  }
 		  }

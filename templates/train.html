@@ -1,6 +1,41 @@
 <html>
-    <div>
-        {{accuracy}}
-        {{epoch}}
-    </div>
+        <head>
+                <title>Fake-Tag</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!--===============================================================================================-->
+                <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icons/favicon.ico') }}"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animate/animate.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animsition/css/animsition.min.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/select2/select2.min.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/daterangepicker/daterangepicker.css') }}">
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+            <!--===============================================================================================-->
+            </head>
+        <body>
+                <div class="container-contact100">
+                    <div class="wrap-contact100">
+                        <h2 color=#bdbdd3>
+                            Accuracy of the model is:    {{accuracy}}
+                        </h2>
+                        <br>
+                        <h2 color=#bdbdd3>
+                            Epoch number is :            {{epoch}}
+                        </h2>
+                        
+                    </div>
+                </div>
+        </body>
 </html>

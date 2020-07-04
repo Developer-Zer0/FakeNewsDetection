@@ -107,7 +107,7 @@ def create_embedding_matrix(field,embeddings):
 
 @app.route('/form',methods=['POST','GET'])
 def model_form():
-    return render_template('form.html')
+    return render_template('index.html')
 
 
 @app.route('/train',methods=['POST','GET'])
