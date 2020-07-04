@@ -29,12 +29,47 @@ sendText.onclick = async function(element) {
 	  return resp;
   }
 
+<<<<<<< HEAD
   var modal = 
 			  '<div id="modal-content" class="modal">' +
 				  '<div class="modal-header">' +
 					  '<span id="cross" class="close" onclick="document.getElementById(`modal-content`).style.display = `none`;">&times;</span>' +
 					  '<h2 id="header">Modal Header</h2>' +
 				  '</div>' +
+=======
+	async function f() {
+		let promise = new Promise((resolve, reject) => {
+			setTimeout(() => resolve("done!"), 2000)
+		  });
+		
+		let resp = await promise;
+		chrome.tabs.executeScript(
+			null,
+			{code: "window.getSelection().toString()"}, async function(selection){
+				sel = selection[0];
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+				var theUrl = "http://localhost:5000/get_prediction";
+				xmlhttp.open("POST", theUrl);
+				xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+				xmlhttp.send(JSON.stringify({ "text": selection[0] }));
+				xmlhttp.onreadystatechange =  async function() {
+					if (this.readyState == 4) {
+					  //JSON.parse does not evaluate the attacker's scripts.
+					  console.log(this.responseText);
+					  resp =  JSON.parse(this.responseText);
+					}
+				}
+				let promise = new Promise((resolve, reject) => {
+					setTimeout(() => resolve("done!"), 1000)
+				  });				
+				let result = await promise;
+				resp = result
+				return result;
+			}
+		);
+		return resp;
+	}
+>>>>>>> da62f269a563f75e605647cca916325e08d02062
 
 				  '<div class="modal-body">' +
 						'<p>Some text in the Modal..</p>' +

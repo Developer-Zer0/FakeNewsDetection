@@ -205,6 +205,7 @@ def get_predictions():
     if len(sent_tokenize(summarized_text)) > 5 or len(word_tokenize(summarized_text)) > 50: 
         summarized_text = summarize_text(summarized_text)
     predictions = predict(summarized_text)
+    print(predictions)
     return jsonify({'prediction':predictions})
 
 
