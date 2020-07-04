@@ -1,18 +1,17 @@
 let sendText = document.getElementById('sendText');
 
-  sendText.onclick = function(element) {
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	// 	chrome.tabs.executeScript(
-	// 		tabs[0].id,
-	// 		{code: 'var div=document.createElement("div"); document.body.prepend(div); div.innerText="hey"; div.id="modal1"; div.style.backgroundColor="' + color + '"'
-	// 	});
-	// });
-	
-	var resp;
-	chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
+  sendText.onclick = async function(element) {
+
+	async function f() {
+		let promise = new Promise((resolve, reject) => {
+			setTimeout(() => resolve("done!"), 2000)
+		  });
+		
+		let resp = await promise;
 		chrome.tabs.executeScript(
 			null,
 			{code: "window.getSelection().toString()"}, async function(selection){
+				sel = selection[0];
 				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
 				var theUrl = "http://localhost:5000/get_prediction";
 				xmlhttp.open("POST", theUrl);
@@ -25,15 +24,22 @@ let sendText = document.getElementById('sendText');
 					  resp =  JSON.parse(this.responseText);
 					}
 				}
+				let promise = new Promise((resolve, reject) => {
+					setTimeout(() => resolve("done!"), 1000)
+				  });				
+				let result = await promise;
+				resp = result
+				return result;
 			}
 		);
-	});
+		return resp;
+	}
 
 	var modal = 
 				'<div id="modal-content" class="modal">' +
 					'<div class="modal-header">' +
 						'<span id="cross" class="close" onclick="document.getElementById(`modal-content`).style.display = `none`;">&times;</span>' +
-						'<h2>'+resp+'</h2>' +
+						'<h2 id="header">Modal Header</h2>' +
 					'</div>' +
 
 					'<div class="modal-body">' +
@@ -67,13 +73,18 @@ let sendText = document.getElementById('sendText');
 					'to {top: 0px; opacity: 1}' +
 				'}'
   
-	
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	async function create(result) {
 		chrome.tabs.executeScript(
 			null,
-			{code: "var div=document.createElement('div'); document.body.prepend(div); div.innerHTML='"+modal+"'; var style=document.createElement('style'); document.body.prepend(style); style.innerHTML='"+modal_style+"';"}
-		);
-	});
+			{code: "var div=document.createElement('div'); document.body.prepend(div); div.innerHTML='"+modal+"'; var style=document.createElement('style'); document.body.prepend(style); style.innerHTML='"+modal_style+"'; document.getElementById('header').innerText='"+result+"'"}
+			);
+	}
 	
+	async function psuedo_f() {
+		let result = await f()
+		create(result)
+	}
+
+	chrome.tabs.query({active: true, currentWindow: true}, psuedo_f());
   };
   
