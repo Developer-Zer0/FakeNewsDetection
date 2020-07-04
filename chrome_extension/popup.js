@@ -9,19 +9,20 @@ let sendText = document.getElementById('sendText');
 	// });
 	
 	var resp;
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
 		chrome.tabs.executeScript(
 			null,
-			{code: "window.getSelection().toString()"}, function(selection){
+			{code: "window.getSelection().toString()"}, async function(selection){
 				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-				var theUrl = "";
+				var theUrl = "http://localhost:5000/get_prediction";
 				xmlhttp.open("POST", theUrl);
 				xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 				xmlhttp.send(JSON.stringify({ "text": selection[0] }));
-				xmlhttp.onreadystatechange = function() {
-					if (xmlhttp.readyState == 4) {
-					  // JSON.parse does not evaluate the attacker's scripts.
-					  resp = JSON.parse(xmlhttp.responseText);
+				xmlhttp.onreadystatechange =  async function() {
+					if (this.readyState == 4) {
+					  //JSON.parse does not evaluate the attacker's scripts.
+					  console.log(this.responseText);
+					  resp =  JSON.parse(this.responseText);
 					}
 				}
 			}
@@ -32,7 +33,7 @@ let sendText = document.getElementById('sendText');
 				'<div id="modal-content" class="modal">' +
 					'<div class="modal-header">' +
 						'<span id="cross" class="close" onclick="document.getElementById(`modal-content`).style.display = `none`;">&times;</span>' +
-						'<h2>Modal Header</h2>' +
+						'<h2>'+resp+'</h2>' +
 					'</div>' +
 
 					'<div class="modal-body">' +
