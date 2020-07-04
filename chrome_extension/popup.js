@@ -37,9 +37,6 @@ sendText.onclick = async function(element) {
 					  '<h2 id="header">Modal Header</h2>' +
 				  '</div>' +
 
-				  '<div class="modal-body">' +
-						'<p>Some text in the Modal..</p>' +
-				  '</div>' +
 			  '</div>'
 			  
   var modal_style = 
